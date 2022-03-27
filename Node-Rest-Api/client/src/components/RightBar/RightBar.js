@@ -1,6 +1,6 @@
 import styles from "./RightBar.module.css";
 import CakeIcon from "@mui/icons-material/Cake";
-export default function RightBar({ users, profile }) {
+export default function RightBar({ user }) {
   const HomeRightbar = () => {
     return (
       <>
@@ -15,8 +15,8 @@ export default function RightBar({ users, profile }) {
         </div>
         <h4 className={styles.rightBarOnline}>Online Friends</h4>
         <ul className={styles.rightBarFriendsList}>
-          {users.map((user) => {
-            return (
+     {/*     {user.map((user) => {
+             return (
               <li key={user.id} className={styles.rightBarFriend}>
                 <div className={styles.rightBarImgContainer}>
                   <img
@@ -30,9 +30,9 @@ export default function RightBar({ users, profile }) {
                   {user.username}
                 </span>
               </li>
-            );
-          })}
-        </ul>
+            ); 
+          })} */}
+                  </ul>
       </>
     );
   };
@@ -44,33 +44,57 @@ export default function RightBar({ users, profile }) {
         <div className={styles.rightbarInfo}>
           <div className={styles.rightbarInfoItem}>
             <span className={styles.rightbarInfoKey}>City</span>
-            <span className={styles.rightbarInfoValue}>Alabama</span>
+            <span className={styles.rightbarInfoValue}>{user.city}</span>
           </div>
           <div className={styles.rightbarInfoItem}>
             <span className={styles.rightbarInfoKey}>From</span>
-            <span className={styles.rightbarInfoValue}>Alabama</span>
+            <span className={styles.rightbarInfoValue}>{user.from}</span>
           </div>
           <div className={styles.rightbarInfoItem}>
             <span className={styles.rightbarInfoKey}>Relationship Status</span>
-            <span className={styles.rightbarInfoValue}>Married</span>
+            <span className={styles.rightbarInfoValue}>
+              {user.relationship === 1
+                ? "Married"
+                : user.relationship === 2
+                ? "Single"
+                : user.relationship === 3
+                ? "Other"
+                : "-"}
+            </span>
           </div>
         </div>
         <h4 className={styles.rightbarTitle}>User Friends</h4>
         <div className={styles.rightbarFollowings}>
           <div className={styles.rightbarFollowing}>
-            <img className={styles.rightbarFollowingImg} src="/assets/person/1.jpg" alt="" />
+            <img
+              className={styles.rightbarFollowingImg}
+              src="/assets/person/1.jpg"
+              alt=""
+            />
             <span className={styles.rightbarFollowingName}>ads sa</span>
           </div>
           <div className={styles.rightbarFollowing}>
-            <img className={styles.rightbarFollowingImg} src="/assets/person/2.jpg" alt="" />
+            <img
+              className={styles.rightbarFollowingImg}
+              src="/assets/person/2.jpg"
+              alt=""
+            />
             <span className={styles.rightbarFollowingName}>ads sa</span>
           </div>
           <div className={styles.rightbarFollowing}>
-            <img className={styles.rightbarFollowingImg} src="/assets/person/3.jpg" alt="" />
+            <img
+              className={styles.rightbarFollowingImg}
+              src="/assets/person/3.jpg"
+              alt=""
+            />
             <span className={styles.rightbarFollowingName}>ads sa</span>
           </div>
           <div className={styles.rightbarFollowing}>
-            <img className={styles.rightbarFollowingImg} src="/assets/person/1.jpg" alt="" />
+            <img
+              className={styles.rightbarFollowingImg}
+              src="/assets/person/1.jpg"
+              alt=""
+            />
             <span className={styles.rightbarFollowingName}>ads sa</span>
           </div>
         </div>
@@ -80,7 +104,7 @@ export default function RightBar({ users, profile }) {
   return (
     <div className={styles.rightBarContainer}>
       <div className={styles.rightBarWrapper}>
-        {profile? <ProfileRightBar />:<HomeRightbar/>}
+        {user ? <ProfileRightBar /> : <HomeRightbar />}
       </div>
     </div>
   );

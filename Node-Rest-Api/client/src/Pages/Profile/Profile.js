@@ -1,10 +1,21 @@
+import { useState, useEffect } from "react";
 import Feed from "../../components/Feed/Feed";
 import LeftBar from "../../components/LeftBar/LeftBar";
 import Navbar from "../../components/Navbar/Navbar";
 import RightBar from "../../components/RightBar/RightBar";
 import styles from "./Profile.module.css";
 import { Users } from "../../dummyData";
+import axios from "axios";
+import { useParams } from "react-router";
 export default function Profile() {
+  const [user, setUser] = useState({});
+  const params = useParams(); 
+  useEffect(() => {
+    axios.get(`/users?username=${params.username}`).then((res) => {
+      setUser(res.data);
+    });
+  }, [params.username]);
+
   return (
     <div>
       <Navbar />
@@ -15,23 +26,23 @@ export default function Profile() {
             <div className={styles.profileImages}>
               <img
                 className={styles.profileCoverImg}
-                src="/assets/person/noCover.png"
+                src={user.CoverPicture?user.CoverPicture:"/assets/person/noCover.png"}
                 alt=""
               />
               <img
                 className={styles.profileUserImg}
-                src="/assets/person/3.jpg"
+                src={user.profilePicture?user.profilePicture:"/assets/person/noAvatar.png"}
                 alt=""
               />
             </div>
             <div className={styles.profileInfo}>
-          <h3 className={styles.profileInfoName}> Tracy Macgrady</h3>
-           <p className={styles.profileInfoDesc}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. A ea incidunt quam labore omnis quo temporibus! Obcaecati quia expedita, minus eveniet, laudantium laboriosam placeat, modi enim explicabo quibusdam perspiciatis provident.</p>
+          <h3 className={styles.profileInfoName}>{user.username}</h3>
+           <p className={styles.profileInfoDesc}>{user.description}</p>
             </div>
           </div>
           <div className={styles.profileRightBottom}>
-            <Feed />
-            <RightBar profile users={Users} />
+            <Feed username={params.username}/>
+            <RightBar user={user} />
           </div>
         </div>
       </div>

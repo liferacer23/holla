@@ -53,6 +53,7 @@
 .navbarLink{
     cursor: pointer;
     font-size: 0.9rem;
+    color: white;
 }
 .navbarIcons{
     display: flex;

@@ -1,5 +1,5 @@
 .leftBarContainer{
-    flex:3;
+    flex:1.8;
     height: calc(100vh - 8vh);
     overflow-y:scroll ;
     position: sticky;

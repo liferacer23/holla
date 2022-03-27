@@ -39,11 +39,11 @@ app.use("/api/auth", authRoute);
 app.use("/api/posts", postsRoute);
 
 
-app.use(express.static(path.join(__dirname, "client")));
+/* app.use(express.static(path.join(__dirname, "client")));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+}); */
 
 app.listen(port||7000, () => {
   console.log("BackEnd server is running Sir..");
