@@ -115,3 +115,13 @@
 .loginForgot:hover{
     text-decoration: underline;
 }
+.loginLoading{
+  width: 15%;
+  height: 85%;
+  background-color: transparent;
+
+}
+
+.loginButton:disabled{
+  cursor: not-allowed;
+}

@@ -7,10 +7,10 @@ export default function Feed({username}) {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     username
-    ? axios.get(`/posts/profile/${username}`) .then((res) => {
+    ? axios.get(`/posts/profile/${username}`).then((res) => {
       setPosts(res.data);
     }) 
-    : axios.get('/posts/timeline/62313adb398bffdb03122ddd') .then((res) => {
+    : axios.get('/posts/timeline/62313adb398bffdb03122ddd').then((res) => {
       setPosts(res.data);
     });
    
