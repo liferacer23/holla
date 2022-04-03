@@ -3,8 +3,7 @@ import styles from "./Login.module.css";
 import { loginCall } from "../../apiCall";
 import { AuthContext } from "../../Context/AuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
-import { disable } from "express/lib/application";
+import {Link} from 'react-router-dom';
 export default function Login() {
   const email = useRef();
   const password = useRef();
@@ -44,12 +43,15 @@ export default function Login() {
               type="password"
               ref={password}
             />
-
+            
             <button type="submit" className={styles.loginButton} disabled={isFetching}>
               {isFetching ? <CircularProgress  color="inherit" size="20px"/> : "Login"}
             </button>
+           
             <span className={styles.loginForgot}> Forgot Password?</span>
+            <Link to="/register">
             <button className={styles.loginRegisterButton}>{isFetching ? <CircularProgress  color="inherit" size="20px"/> : "Register"}</button>
+            </Link>
           </form>
         </div>
       </div>

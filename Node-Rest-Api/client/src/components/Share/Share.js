@@ -3,13 +3,15 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import MoreIcon from '@mui/icons-material/More';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
-
+import { AuthContext } from "../../Context/AuthContext";
+import { useContext } from "react";
 export default function Share() {
+  const {user} = useContext(AuthContext)
   return (
     <div className={styles.shareContainer}>
       <div className={styles.shareWrapper}>
         <div className={styles.shareTop}>
-          <img className={styles.shareTopImg} src="/assets/girl3.jpg" alt="" />
+          <img className={styles.shareTopImg} src={user.profilePicture?user.profilePicture:"/assets/person/noAvatar.png"} alt="" />
           <input
             className={styles.shareInput}
             placeholder="Whats on your mind..."

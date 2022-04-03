@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import Post from "../Post/Post";
 import Share from "../Share/Share";
 import styles from "./Feed.module.css";
 import axios from "axios";
+import { AuthContext } from "../../Context/AuthContext";
 export default function Feed({username}) {
+  const {user} = useContext(AuthContext)
   const [posts, setPosts] = useState([]);
+  console.log(user);
   useEffect(() => {
     username
     ? axios.get(`/posts/profile/${username}`).then((res) => {
       setPosts(res.data);
     }) 
-    : axios.get('/posts/timeline/62313adb398bffdb03122ddd').then((res) => {
+    : axios.get(`/posts/timeline/${user._id}`).then((res) => {
       setPosts(res.data);
     });
    
