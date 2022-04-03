@@ -17,7 +17,7 @@ export default function Feed({username}) {
       setPosts(res.data);
     });
    
-  }, [username]);
+  }, [username,user._id]);
   return (
     <div className={styles.feedContainer}>
       <div className={styles.feedWrapper}>
