@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "./Post.module.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -6,6 +6,7 @@ import axios from "axios";
 import TimeAgo from "react-timeago";
 import englishStrings from "react-timeago/lib/language-strings/en";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+import { AuthContext } from "../../Context/AuthContext";
 
 import { Link } from "react-router-dom";
 
@@ -16,19 +17,29 @@ export default function Post({ data }) {
   const [comments, setComments] = useState(data.comments.length);
   const [liked, setLiked] = useState(false);
   const [user, setUser] = useState({});
+  const { user: currentUser } = useContext(AuthContext);
   useEffect(() => {
     axios.get(`/users?userId=${data.userId}`).then((res) => {
       setUser(res.data);
     });
   }, [data.userId]);
+  useEffect(() => {
+    setLiked(data.likes.includes(currentUser._id));
+  }, [currentUser._id,data.likes]);
   const likeHandler = (liked) => {
-    if (!liked) {
+    try {
+      axios.put(`/posts/${data._id}/like`, { userId: currentUser._id });
+    } catch (err) {
+      console.log(err);
+    }
+
+   if (!liked) {
       setLikes((prev) => prev + 1);
       setLiked(true);
     } else {
       setLikes((prev) => prev - 1);
       setLiked(false);
-    }
+    } 
   };
   return (
     <div className={styles.postContainer}>

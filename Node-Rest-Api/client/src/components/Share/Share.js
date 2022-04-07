@@ -4,9 +4,29 @@ import MoreIcon from '@mui/icons-material/More';
 import FmdGoodIcon from '@mui/icons-material/FmdGood';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { AuthContext } from "../../Context/AuthContext";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
+import axios from "axios";
 export default function Share() {
   const {user} = useContext(AuthContext)
+  const description = useRef();
+  const [file,setFile] = useState();
+
+
+  const submitHandler = async (e) => {
+
+    e.preventDefault();
+
+     const newPost ={
+       userId:user._id,
+       description:description.current.value,
+     }
+  
+    try{
+        await axios.post('/posts',{newPost})
+    }catch(err){
+      console.log(err);
+    }
+  }
   return (
     <div className={styles.shareContainer}>
       <div className={styles.shareWrapper}>
@@ -14,18 +34,20 @@ export default function Share() {
           <img className={styles.shareTopImg} src={user.profilePicture?user.profilePicture:"/assets/person/noAvatar.png"} alt="" />
           <input
             className={styles.shareInput}
-            placeholder="Whats on your mind..."
+            placeholder={`Whats on your mind ${user.username}...`}
             type="text"
+            ref={description}
           />
         </div>
         <hr className={styles.shareHr} />
 
-        <div className={styles.shareBottom}>
+        <form onSubmit={submitHandler} className={styles.shareBottom}>
           <div className={styles.shareOptions}>
-            <div className={styles.shareOption}>
+            <label htmlFor="file" className={styles.shareOption}>
               <PermMediaIcon  htmlColor="orange" className={styles.shareOptionIcon} />
               <span className={styles.shareOptionText}>Photo or Video</span>
-            </div>
+              <input style={{display:"none"}} type="file" id="file" accept =".png, .jpeg, .jpg" onChange={(e)=>{setFile(e.target.file[0])}}/>
+            </label>
             <div className={styles.shareOption}>
               <MoreIcon htmlColor="green" className={styles.shareOptionIcon} />
               <span className={styles.shareOptionText}>Tag</span>
@@ -39,8 +61,8 @@ export default function Share() {
               <span className={styles.shareOptionText}>Mood</span>
             </div>
           </div>
-          <button className={styles.shareButton}>Share</button>
-        </div>
+          <button type="submit" className={styles.shareButton}>Share</button>
+        </form>
       </div>
     </div>
   );
